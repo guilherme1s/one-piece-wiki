@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-bg: #0b0e14;
+  --color-bg-elevated: #111620;
+  --color-bg-card: #151b28;
+  --color-bg-card-hover: #1a2234;
+  --color-bg-overlay: rgba(0, 0, 0, 0.75);
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-text: #e8eaf0;
+  --color-text-muted: #8892a4;
+  --color-text-dim: #5c6478;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  --color-primary: #e63946;
+  --color-primary-hover: #ff4d5a;
+  --color-primary-glow: rgba(230, 57, 70, 0.25);
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  --color-gold: #d4a017;
+  --color-gold-hover: #e8b41e;
+  --color-gold-dim: #8b6914;
+
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(255, 255, 255, 0.12);
+
+  --color-paramecia: #9b59b6;
+  --color-logia: #27ae60;
+  --color-zoan: #2980b9;
+  --color-zoan-mythic: #e67e22;
+  --color-zoan-ancient: #8e44ad;
+  --color-yonko: #c0392b;
+  --color-living: #2ecc71;
 }
