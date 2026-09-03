@@ -1,3 +1,5 @@
-export default function Home() {
-  return <h1>One Piece Wiki</h1>;
+import { redirect } from "next/navigation";
+
+export default function HomePage() {
+  redirect("/characters");
 }

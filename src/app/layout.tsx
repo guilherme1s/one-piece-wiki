@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Oswald } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/header/header";
 
 const interFont = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const oswaldFont = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
 });
 
 export const metadata: Metadata = {
@@ -14,8 +21,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={interFont.className}>
-      <body className="min-h-full flex flex-col bg-bg">{children}</body>
+    <html
+      lang="pt-BR"
+      className={`${interFont.variable} ${oswaldFont.variable}`}
+    >
+      <body className="min-h-full flex flex-col bg-bg text-text">
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
