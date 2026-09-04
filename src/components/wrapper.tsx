@@ -7,7 +7,7 @@ export const Wrapper = ({ className, ...props }: DivProps) => {
   return (
     <div
       className={twMerge(
-        "mx-auto flex w-full max-w-300 items-center",
+        "mx-auto flex w-full max-w-300 items-center px-6 xl:px-0",
         className,
       )}
       {...props}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header/header";
+import { Footer } from "@/components/footer";
 
 const interFont = Inter({
   subsets: ["latin"],
@@ -25,9 +26,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt-BR"
       className={`${interFont.variable} ${oswaldFont.variable}`}
     >
-      <body className="min-h-full flex flex-col bg-bg text-text">
+      <body className="min-h-screen flex flex-col bg-bg text-text">
         <Header />
-        {children}
+
+        <main className="flex-1">{children}</main>
+
+        <Footer />
       </body>
     </html>
   );
