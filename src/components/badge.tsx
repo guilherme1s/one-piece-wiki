@@ -13,10 +13,23 @@ export const Badge = ({
   children,
   ...props
 }: BadgeProps) => {
+  const roundedMap = {
+    xs: "rounded-xs",
+    sm: "rounded-sm",
+    md: "rounded-md",
+    lg: "rounded-lg",
+    full: "rounded-full",
+  };
+
+  const colorMap: Record<string, string> = {
+    primary: "border-primary bg-primary/20 text-primary",
+    gold: "border-gold bg-gold/20 text-gold",
+  };
+
   return (
     <span
       className={twMerge(
-        `inline-flex items-center rounded-${rounded} border border-${color} bg-${color}/20 px-2.5 py-1 text-xs font-semibold uppercase text-${color}`,
+        `inline-flex items-center ${roundedMap[rounded]} border border-${colorMap[color]} bg-${colorMap[color]}/20 px-2.5 py-1 text-xs font-semibold uppercase text-${color}`,
         className,
       )}
       {...props}
