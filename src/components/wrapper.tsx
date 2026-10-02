@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-export interface DivProps extends ComponentProps<"div"> {}
+export type DivProps = ComponentProps<"div">;
 
 export const Wrapper = ({ className, ...props }: DivProps) => {
   return (
