@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface BadgeProps extends ComponentProps<"span"> {
-  color?: string;
+  color?: "primary" | "gold" | "crew" | "muted";
   rounded?: "xs" | "sm" | "md" | "lg" | "full";
 }
 
@@ -21,15 +21,18 @@ export const Badge = ({
     full: "rounded-full",
   };
 
-  const colorMap: Record<string, string> = {
-    primary: "border-primary bg-primary/20 text-primary",
-    gold: "border-gold bg-gold/20 text-gold",
+  const colorMap = {
+    primary: "border-primary/40 bg-primary/15 text-primary",
+    gold: "border-gold/40 bg-gold/15 text-gold",
+    crew: "border-primary/40 bg-primary/15 text-primary",
+    muted: "border-border bg-bg-elevated text-text-muted",
   };
 
   return (
     <span
       className={twMerge(
-        `inline-flex items-center ${roundedMap[rounded]} border border-${colorMap[color]} bg-${colorMap[color]}/20 px-2.5 py-1 text-xs font-semibold uppercase text-${color}`,
+        `inline-flex max-w-full items-center ${roundedMap[rounded]} border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide`,
+        colorMap[color],
         className,
       )}
       {...props}

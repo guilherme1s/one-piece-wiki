@@ -8,7 +8,7 @@ type CardRootProps = ComponentProps<typeof Link>;
 const CardRoot = ({ className, ...props }: CardRootProps) => (
   <Link
     className={twMerge(
-      "group block overflow-hidden rounded-xl border border-border bg-bg-card",
+      "group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-card transition-colors duration-200",
       "hover:border-border-hover hover:bg-bg-card-hover",
       "outline-none focus-visible:ring-2 focus-visible:ring-primary",
       className,
@@ -45,7 +45,7 @@ const CardImage = ({
         alt={alt}
         fill
         sizes="(max-width: 768px) 100vw, 33vw"
-        className="object-cover transition-transform duration-300 group-hover:scale-105"
+        className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
       />
     ) : (
       children
@@ -56,7 +56,7 @@ const CardImage = ({
 type CardBodyProps = ComponentProps<"div">;
 
 const CardBody = ({ className, ...props }: CardBodyProps) => (
-  <div className={twMerge("p-5", className)} {...props} />
+  <div className={twMerge("flex flex-1 flex-col p-5", className)} {...props} />
 );
 
 type CardTitleProps = ComponentProps<"h3">;
@@ -94,7 +94,7 @@ type CardFooterProps = ComponentProps<"div">;
 const CardFooter = ({ className, ...props }: CardFooterProps) => (
   <div
     className={twMerge(
-      "flex flex-wrap items-center justify-between gap-2 border-t border-border px-5 py-3",
+      "flex min-h-14 flex-wrap items-center gap-2 border-t border-border bg-bg-elevated/40 px-5 py-3",
       className,
     )}
     {...props}
