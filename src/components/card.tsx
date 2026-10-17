@@ -3,13 +3,13 @@ import Link from "next/link";
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-type CardRootProps = ComponentProps<typeof Link>;
+type CardRootProps = ComponentProps<"div">;
 
 const CardRoot = ({ className, ...props }: CardRootProps) => (
-  <Link
+  <div
     className={twMerge(
-      "group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-card transition-colors duration-200",
-      "hover:border-border-hover hover:bg-bg-card-hover",
+      "group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-card transition-all duration-200",
+      "hover:-translate-y-1 hover:border-border-hover hover:bg-bg-card-hover hover:shadow-lg",
       "outline-none focus-visible:ring-2 focus-visible:ring-primary",
       className,
     )}
