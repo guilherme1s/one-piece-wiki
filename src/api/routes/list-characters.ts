@@ -14,17 +14,45 @@ export const CharacterNameSchema = z.object({
 	romaji: z.string().nullable().optional(),
 });
 
+export const CharacterBirthdaySchema = z.object({
+	day: z.number().nullable().optional(),
+	month: z.number().nullable().optional(),
+	label: z
+		.object({
+			en: z.string().nullable().optional(),
+			jp: z.string().nullable().optional(),
+			pt: z.string().nullable().optional(),
+		})
+		.nullable()
+		.optional(),
+	trivia: z
+		.object({
+			en: z.string().nullable().optional(),
+			pt: z.string().nullable().optional(),
+		})
+		.nullable()
+		.optional(),
+});
+
+export const CharacterExtraDataSchema = z.looseObject({
+	origin: z.string().nullable().optional(),
+	epithet: z.string().nullable().optional(),
+	occupation: z.string().nullable().optional(),
+	affiliation: z.string().nullable().optional(),
+	first_appearance: z.string().nullable().optional(),
+});
+
 export const CharacterSchema = z.object({
 	id: z.string(),
 	created_at: z.string(),
 	name: CharacterNameSchema.nullable(),
 	age: z.number().nullable(),
-	birthday: z.unknown().nullable(),
+	birthday: CharacterBirthdaySchema.nullable(),
 	blood_type: z.string(),
 	height: z.number().nullable(),
 	status: z.string(),
 	image_url: z.string().nullable(),
-	extra_data: z.record(z.string(), z.unknown()).nullable(),
+	extra_data: CharacterExtraDataSchema.nullable(),
 	bounties: z.array(BountySchema),
 });
 
@@ -36,6 +64,8 @@ export const CharactersQuerySchema = z.object({
 
 export type Character = z.infer<typeof CharacterSchema>;
 export type Bounty = z.infer<typeof BountySchema>;
+export type CharacterBirthday = z.infer<typeof CharacterBirthdaySchema>;
+export type CharacterExtraData = z.infer<typeof CharacterExtraDataSchema>;
 
 export interface ListCharactersParams {
 	q?: string;

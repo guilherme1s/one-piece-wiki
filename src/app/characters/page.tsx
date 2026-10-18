@@ -1,7 +1,9 @@
 import { Hero } from "@/components/hero";
 import { Wrapper } from "@/components/wrapper";
 import { listCharacters } from "@/api/routes/list-characters";
-import { CharacterGrid } from "@/components/character-grid";
+import { getCharacterDisplayName } from "@/lib/character-name";
+import { getCharacterExtrasForPage } from "@/lib/character-extras";
+import { CharacterGrid } from "@/components/character/character-grid";
 import { SearchForm } from "@/components/search-form";
 
 interface CharactersPageProps {
@@ -32,6 +34,12 @@ export default async function CharactersPage({
     page: parsePage(page),
   });
 
+  const extrasByName = await getCharacterExtrasForPage(
+    characters.map((character) =>
+      getCharacterDisplayName(character.name),
+    ),
+  ).catch(() => ({}));
+
   return (
     <div>
       <Hero />
@@ -58,6 +66,7 @@ export default async function CharactersPage({
           ) : (
             <CharacterGrid
               characters={characters}
+              extrasByName={extrasByName}
               page={currentPage}
               hasNextPage={hasNextPage}
             />
