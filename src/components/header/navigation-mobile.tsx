@@ -17,7 +17,7 @@ export const NavigationMobile = ({ open }: NavigationMobileProps) => {
       label: "Personagens",
     },
     {
-      href: "/akuma-no-mi",
+      href: "/fruits",
       label: "Akuma no Mi",
     },
   ];

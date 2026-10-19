@@ -13,7 +13,7 @@ export const NavigationDesktop = () => {
       label: "Personagens",
     },
     {
-      href: "/akuma-no-mi",
+      href: "/fruits",
       label: "Akumas no Mi",
     },
   ];
