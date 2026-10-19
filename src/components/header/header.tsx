@@ -23,9 +23,11 @@ export const Header = () => {
             <SkullIcon className="text-text" size={26} />
           </Link>
 
-          <h1 className="text-xl font-bold text-text">
-            ONE PIECE <span className="text-primary">WIKI</span>
-          </h1>
+          <Link href="/characters">
+            <h1 className="text-xl font-bold text-text">
+              ONE PIECE <span className="text-primary">WIKI</span>
+            </h1>
+          </Link>
         </div>
 
         <button
