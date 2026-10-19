@@ -6,6 +6,8 @@ export const FRUIT_TYPE_COLORS: Record<string, BadgeColor> = {
 	Zoan: "blue",
 	"Zoan Mítico": "orange",
 	"Zoan Ancestral": "violet",
+	Smile: "gold",
+	Unknown: "neutral",
 };
 
 export const getFruitTypeBadgeColor = (
