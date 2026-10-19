@@ -1,4 +1,5 @@
 import { Search } from "lucide-react";
+import { Button } from "./button";
 
 interface SearchFormProps {
   query?: string;
@@ -36,12 +37,7 @@ export const SearchForm = ({
           placeholder={placeholder}
           className="min-w-0 flex-1 bg-transparent text-sm text-text outline-none placeholder:text-text-muted"
         />
-        <button
-          type="submit"
-          className="rounded-md bg-gold px-3 py-1.5 text-xs font-semibold text-bg transition hover:opacity-90 cursor-pointer"
-        >
-          Buscar
-        </button>
+        <Button type="submit" variant="gold">Buscar</Button>
       </div>
     </form>
   );
