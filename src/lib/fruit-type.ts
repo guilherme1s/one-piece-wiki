@@ -1,6 +1,6 @@
 import type { BadgeColor } from "@/components/badge";
 
-const FRUIT_TYPE_COLORS: Record<string, BadgeColor> = {
+export const FRUIT_TYPE_COLORS: Record<string, BadgeColor> = {
 	Paramecia: "purple",
 	Logia: "green",
 	Zoan: "blue",

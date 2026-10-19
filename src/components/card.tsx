@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -9,7 +8,6 @@ const CardRoot = ({ className, ...props }: CardRootProps) => (
   <div
     className={twMerge(
       "group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-card transition-all duration-200",
-      "hover:-translate-y-1 hover:border-border-hover hover:bg-bg-card-hover hover:shadow-lg",
       "outline-none focus-visible:ring-2 focus-visible:ring-primary",
       className,
     )}

@@ -7,10 +7,19 @@ const MATCH_THRESHOLD = 0.5;
 
 const UpstreamCrewSchema = z
 	.object({
+		id: z.number().optional(),
 		name: z.string().nullable().optional(),
 		roman_name: z.string().nullable().optional(),
 		is_yonko: z.boolean().optional(),
 		total_prime: z.string().nullable().optional(),
+		number: z.string().nullable().optional(),
+	})
+	.loose();
+
+const UpstreamCrewMemberSchema = z
+	.object({
+		name: z.string().nullable().optional(),
+		job: z.string().nullable().optional(),
 	})
 	.loose();
 
@@ -35,9 +44,11 @@ const UpstreamCharacterSchema = z
 export interface CharacterExtras {
 	job: string | null;
 	crew: {
+		id: number | null;
 		name: string | null;
 		romanName: string | null;
 		isYonko: boolean;
+		memberCount: number | null;
 		totalPrime: string | null;
 	} | null;
 	fruit: {
@@ -47,6 +58,21 @@ export interface CharacterExtras {
 		description: string | null;
 	} | null;
 }
+
+export interface CrewMember {
+	name: string;
+	job: string | null;
+}
+
+const parseMemberCount = (
+	value: string | null | undefined,
+) => {
+	if (!value) return null;
+
+	const parsed = Number.parseInt(value, 10);
+
+	return Number.isFinite(parsed) ? parsed : null;
+};
 
 const FRUIT_TYPE_LABELS: Record<string, string> = {
 	paramecia: "Paramecia",
@@ -175,19 +201,23 @@ const buildExtras = (character: {
 		job: character.job ?? null,
 		crew: character.crew
 			? {
-					name: character.crew.name ?? null,
-					romanName: character.crew.roman_name ?? null,
-					isYonko: character.crew.is_yonko ?? false,
-					totalPrime: character.crew.total_prime ?? null,
-				}
+				id: character.crew.id ?? null,
+				name: character.crew.name ?? null,
+				romanName: character.crew.roman_name ?? null,
+				isYonko: character.crew.is_yonko ?? false,
+				memberCount: parseMemberCount(
+					character.crew.number,
+				),
+				totalPrime: character.crew.total_prime ?? null,
+			}
 			: null,
 		fruit: character.fruit
 			? {
-					name: character.fruit.name ?? null,
-					romanName: character.fruit.roman_name ?? null,
-					type: mapFruitType(character.fruit.type),
-					description: character.fruit.description ?? null,
-				}
+				name: character.fruit.name ?? null,
+				romanName: character.fruit.roman_name ?? null,
+				type: mapFruitType(character.fruit.type),
+				description: character.fruit.description ?? null,
+			}
 			: null,
 	};
 };
@@ -221,4 +251,49 @@ export const getCharacterExtrasForPage = async (
 	});
 
 	return extrasByName;
+};
+
+export const getCharacterCrewMembers = async (
+	crewId: number,
+): Promise<CrewMember[]> => {
+	const response = await fetch(
+		`${UPSTREAM_BASE_URL}/characters/en/crew/${crewId}`,
+		{
+			next: {
+				revalidate: REVALIDATE_SECONDS,
+			},
+			signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+		},
+	).catch(() => null);
+
+	if (!response?.ok) {
+		return [];
+	}
+
+	let data: unknown;
+
+	try {
+		data = await response.json();
+	} catch {
+		return [];
+	}
+
+	if (!Array.isArray(data)) {
+		return [];
+	}
+
+	return data.flatMap((item) => {
+		const result = UpstreamCrewMemberSchema.safeParse(item);
+
+		if (!result.success || !result.data.name) {
+			return [];
+		}
+
+		return [
+			{
+				name: result.data.name,
+				job: result.data.job ?? null,
+			},
+		];
+	});
 };

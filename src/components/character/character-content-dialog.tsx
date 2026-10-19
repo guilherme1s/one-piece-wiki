@@ -2,16 +2,19 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Coins, UserRound } from "lucide-react";
 import { twMerge } from "tailwind-merge";
-import { Character, CharacterBirthday } from "@/api/routes/list-characters";
+import { Character } from "@/api/routes/list-characters";
 import type { CharacterExtras } from "@/lib/character-extras";
+import { formatBirthday } from "@/lib/character-birthday";
 import { getCharacterDisplayName } from "@/lib/character-name";
 import { getCrewDisplayName } from "@/lib/crew-names";
 import { getFruitTypeBadgeColor } from "@/lib/fruit-type";
 import { getLabels } from "@/lib/labels";
 import { Badge } from "../badge";
 import { Dialog } from "../dialog";
+import { Button } from "../button";
 
 type CharacterExtrasResponse = {
   extras: CharacterExtras | null;
@@ -20,18 +23,6 @@ type CharacterExtrasResponse = {
 const extrasCache = new Map<string, CharacterExtras | null>();
 
 type CharacterContentDialogProps = Character;
-
-const formatBirthday = (birthday: CharacterBirthday | null) => {
-  if (!birthday) return null;
-
-  if (birthday.label?.pt) return birthday.label.pt;
-
-  if (birthday.day != null && birthday.month != null) {
-    return `${birthday.day}/${birthday.month}`;
-  }
-
-  return null;
-};
 
 interface DialogFieldProps {
   label: string;
@@ -49,6 +40,7 @@ const DialogField = ({ label, value, className }: DialogFieldProps) => (
 );
 
 export const CharacterContentDialog = ({
+  id,
   name,
   age,
   birthday,
@@ -227,7 +219,9 @@ export const CharacterContentDialog = ({
 
       <Dialog.Footer>
         <Dialog.Close asChild>
-          <button className="cursor-pointer">Ver detalhes</button>
+          <Link href={`/characters/${id}`} className="cursor-pointer">
+            <Button variant="primary">Ver mais detalhes</Button>
+          </Link>
         </Dialog.Close>
       </Dialog.Footer>
     </>

@@ -21,7 +21,8 @@ export const NavigationDesktop = () => {
   return (
     <nav className="hidden md:flex gap-6 text-text-muted">
       {navLinks.map((link) => {
-        const isActive = pathname === link.href;
+        const isActive =
+          pathname === link.href || pathname.startsWith(`${link.href}/`);
 
         return (
           <Link
