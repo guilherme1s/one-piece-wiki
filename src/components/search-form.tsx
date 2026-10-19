@@ -1,4 +1,5 @@
 import { Search } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 import { Button } from "./button";
 
 interface SearchFormProps {
@@ -6,6 +7,8 @@ interface SearchFormProps {
   placeholder: string;
   actions: string;
   label: string;
+  params?: Record<string, string>;
+  className?: string;
 }
 
 export const SearchForm = ({
@@ -13,13 +16,15 @@ export const SearchForm = ({
   placeholder,
   label,
   query,
+  params,
+  className,
 }: SearchFormProps) => {
   return (
     <form
       action={actions}
       method="get"
       role="search"
-      className="w-full md:w-80"
+      className={twMerge("w-full md:w-80", className)}
     >
       <label htmlFor="character-search" className="sr-only">
         {label}
@@ -35,10 +40,17 @@ export const SearchForm = ({
           name="q"
           defaultValue={query}
           placeholder={placeholder}
-          className="min-w-0 flex-1 bg-transparent text-sm text-text outline-none placeholder:text-text-muted"
+          className="w-full flex-1 bg-transparent text-sm text-text outline-none placeholder:text-text-muted"
         />
-        <Button type="submit" variant="gold">Buscar</Button>
+        <Button type="submit" variant="gold">
+          Buscar
+        </Button>
       </div>
+
+      {params &&
+        Object.entries(params).map(([key, value]) => (
+          <input key={key} type="hidden" name={key} value={value} />
+        ))}
     </form>
   );
 };
