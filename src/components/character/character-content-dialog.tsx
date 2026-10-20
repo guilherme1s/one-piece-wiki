@@ -15,6 +15,7 @@ import { getLabels } from "@/lib/labels";
 import { Badge } from "../badge";
 import { Dialog } from "../dialog";
 import { Button } from "../button";
+import { Skeleton } from "../skeleton";
 
 type CharacterExtrasResponse = {
   extras: CharacterExtras | null;
@@ -149,8 +150,8 @@ export const CharacterContentDialog = ({
 
             {extras === undefined && (
               <div className="flex flex-col gap-2" aria-busy="true">
-                <div className="h-3 w-24 animate-pulse rounded bg-bg-elevated" />
-                <div className="h-3 w-40 animate-pulse rounded bg-bg-elevated" />
+                <Skeleton className="h-3 w-24 rounded" />
+                <Skeleton className="h-3 w-40 rounded" />
               </div>
             )}
 
