@@ -6,6 +6,8 @@ import {
   getCharacterCrewMembers,
 } from "@/lib/character-extras";
 import { getCharacterDisplayName } from "@/lib/character-name";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { JsonLd } from "@/components/json-ld";
 import { CharacterDetail } from "@/components/character/character-details/character-detail";
 import { Wrapper } from "@/components/wrapper";
 
@@ -22,14 +24,27 @@ export const generateMetadata = async ({
 
   if (!character) {
     return {
-      title: "Personagem não encontrado — One Piece Wiki",
+      title: "Personagem não encontrado",
     };
   }
 
   const displayName = getCharacterDisplayName(character.name);
+  const epithet = character.extra_data?.epithet ?? null;
+
+  const description = epithet
+    ? `${displayName}, ${epithet}. Veja recompensa, tripulação, akuma no mi e informações.`
+    : `${displayName} — veja recompensa, tripulação, akuma no mi e informações.`;
 
   return {
-    title: `${displayName} — One Piece Wiki`,
+    title: displayName,
+    description,
+    openGraph: {
+      title: `${displayName} | ${SITE_NAME}`,
+      description,
+      ...(character.image_url && {
+        images: [{ url: character.image_url }],
+      }),
+    },
   };
 };
 
@@ -50,15 +65,34 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
     ? await getCharacterCrewMembers(extras.crew.id).catch(() => [])
     : [];
 
+  const epithet = character.extra_data?.epithet ?? null;
+
+  const description = epithet
+    ? `${displayName}, ${epithet}. Veja recompensa, tripulação, akuma no mi e informações.`
+    : `${displayName} — veja recompensa, tripulação, akuma no mi e informações.`;
+
+  const characterJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: displayName,
+    description,
+    url: `${SITE_URL}/characters/${character.id}`,
+    ...(character.image_url && { image: character.image_url }),
+  };
+
   return (
-    <Wrapper className="py-12">
-      <div className="w-full">
-        <CharacterDetail
-          character={character}
-          extras={extras}
-          members={members}
-        />
-      </div>
-    </Wrapper>
+    <>
+      <JsonLd data={characterJsonLd} />
+
+      <Wrapper className="py-12">
+        <div className="w-full">
+          <CharacterDetail
+            character={character}
+            extras={extras}
+            members={members}
+          />
+        </div>
+      </Wrapper>
+    </>
   );
 }

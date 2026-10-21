@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { SearchForm } from "@/components/search-form";
 import { Skeleton } from "@/components/skeleton";
 import { Wrapper } from "@/components/wrapper";
@@ -22,6 +23,12 @@ interface FruitsPageProps {
     type?: string | string[];
   }>;
 }
+
+export const metadata: Metadata = {
+  title: "Akumas no Mi",
+  description:
+    "Catálogo completo de akumas no mi de One Piece: Paramecia, Logia e Zoan com tipos, modelos e descrições.",
+};
 
 type DevilFruitsResult = Awaited<ReturnType<typeof listDevilFruits>>;
 

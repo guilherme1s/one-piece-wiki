@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Hero } from "@/components/hero";
 import { Wrapper } from "@/components/wrapper";
 import { listCharacters } from "@/api/routes/list-characters";
@@ -11,6 +12,12 @@ import { SearchForm } from "@/components/search-form";
 interface CharactersPageProps {
   searchParams: Promise<{ page?: string | string[]; q?: string | string[] }>;
 }
+
+export const metadata: Metadata = {
+  title: "Personagens",
+  description:
+    "Explore todos os personagens de One Piece: recompensas, tripulações, ocupações e akumas no mi.",
+};
 
 const parsePage = (value: string | string[] | undefined) => {
   const raw = Array.isArray(value) ? value[0] : value;
